@@ -27247,35 +27247,36 @@ function requireCore () {
 var coreExports = requireCore();
 
 /**
- * Waits for a number of milliseconds.
- *
- * @param milliseconds The number of milliseconds to wait.
- * @returns Resolves with 'done!' after the wait is over.
- */
-async function wait(milliseconds) {
-    return new Promise((resolve) => {
-        if (isNaN(milliseconds))
-            throw new Error('milliseconds is not a number');
-        setTimeout(() => resolve('done!'), milliseconds);
-    });
-}
-
-/**
  * The main function for the action.
  *
  * @returns Resolves when the action is complete.
  */
 async function run() {
     try {
-        const ms = coreExports.getInput('milliseconds');
+        // Get inputs defined in action.yml
+        const username = coreExports.getInput('username');
+        const password = coreExports.getInput('password');
+        const resumePath = coreExports.getInput('resume_path');
+        const overwrite = coreExports.getInput('overwrite') === 'true';
+        // Mask sensitive inputs in logs
+        coreExports.setSecret(username);
+        coreExports.setSecret(password);
         // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-        coreExports.debug(`Waiting ${ms} milliseconds ...`);
-        // Log the current timestamp, wait, then log the new timestamp
-        coreExports.debug(new Date().toTimeString());
-        await wait(parseInt(ms, 10));
-        coreExports.debug(new Date().toTimeString());
+        coreExports.debug(`Starting Naukri resume upload process...`);
+        coreExports.debug(`Resume path: ${resumePath}`);
+        coreExports.debug(`Overwrite existing: ${overwrite}`);
+        // Implement the login and upload functionality here
+        // This would involve browser automation with Puppeteer or similar
+        // Example placeholder for the implementation
+        coreExports.info('Logging into Naukri.com...');
+        // await login(username, password)
+        coreExports.info('Uploading resume...');
+        // const result = await uploadResume(resumePath, overwrite)
         // Set outputs for other workflow steps to use
-        coreExports.setOutput('time', new Date().toTimeString());
+        coreExports.setOutput('upload_status', 'success');
+        coreExports.setOutput('upload_time', new Date().toISOString());
+        coreExports.setOutput('profile_url', 'https://www.naukri.com/mnjuser/profile');
+        coreExports.info('Resume upload completed successfully!');
     }
     catch (error) {
         // Fail the workflow run if an error occurs

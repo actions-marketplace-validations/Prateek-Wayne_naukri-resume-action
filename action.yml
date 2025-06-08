@@ -1,23 +1,36 @@
-name: The name of your action here
-description: Provide a description here
-author: Your name or organization here
+name: Naukri Resume Action
+description: Automate the process of uploading resumes to naukri.com
+author: Prateek Wayne
 
 # Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
-  icon: heart
-  color: red
+  icon: upload-cloud
+  color: blue
 
 # Define your inputs here.
 inputs:
-  milliseconds:
-    description: Your input description here
+  username:
+    description: 'Naukri.com username or email'
     required: true
-    default: '1000'
+  password:
+    description: 'Naukri.com password'
+    required: true
+  resume_path:
+    description: 'Path to the resume file to upload'
+    required: true
+  overwrite:
+    description: 'Whether to overwrite existing resume'
+    required: false
+    default: 'true'
 
 # Define your outputs here.
 outputs:
-  time:
-    description: Your output description here
+  upload_status:
+    description: 'Status of the resume upload (success/failure)'
+  upload_time:
+    description: 'Timestamp of the upload operation'
+  profile_url:
+    description: 'URL to the updated profile on naukri.com'
 
 runs:
   using: node20
