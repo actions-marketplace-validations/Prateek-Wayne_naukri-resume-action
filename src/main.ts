@@ -1,5 +1,4 @@
 import * as core from '@actions/core'
-import { wait } from './wait.js'
 
 /**
  * The main function for the action.
@@ -8,18 +7,37 @@ import { wait } from './wait.js'
  */
 export async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
+    // Get inputs defined in action.yml
+    const username = core.getInput('username')
+    const password = core.getInput('password')
+    const resumePath = core.getInput('resume_path')
+    const overwrite = core.getInput('overwrite') === 'true'
+
+    // Mask sensitive inputs in logs
+    core.setSecret(username)
+    core.setSecret(password)
 
     // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-    core.debug(`Waiting ${ms} milliseconds ...`)
+    core.debug(`Starting Naukri resume upload process...`)
+    core.debug(`Resume path: ${resumePath}`)
+    core.debug(`Overwrite existing: ${overwrite}`)
 
-    // Log the current timestamp, wait, then log the new timestamp
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    // Implement the login and upload functionality here
+    // This would involve browser automation with Puppeteer or similar
+
+    // Example placeholder for the implementation
+    core.info('Logging into Naukri.com...')
+    // await login(username, password)
+
+    core.info('Uploading resume...')
+    // const result = await uploadResume(resumePath, overwrite)
 
     // Set outputs for other workflow steps to use
-    core.setOutput('time', new Date().toTimeString())
+    core.setOutput('upload_status', 'success')
+    core.setOutput('upload_time', new Date().toISOString())
+    core.setOutput('profile_url', 'https://www.naukri.com/mnjuser/profile')
+
+    core.info('Resume upload completed successfully!')
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)

@@ -1,20 +1,24 @@
 {
-  "name": "typescript-action",
-  "description": "GitHub Actions TypeScript template",
-  "version": "0.0.0",
-  "author": "",
+  "name": "naukri-resume-action",
+  "description": "GitHub Action to automate uploading resumes to naukri.com",
+  "version": "1.0.0",
+  "author": "Prateek Wayne",
   "type": "module",
   "private": true,
-  "homepage": "https://github.com/actions/typescript-action",
+  "homepage": "https://github.com/Prateek-Wayne/naukri-resume-action",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/Prateek-Wayne/naukri-resume-action.git"
   },
   "bugs": {
-    "url": "https://github.com/actions/typescript-action/issues"
+    "url": "https://github.com/Prateek-Wayne/naukri-resume-action/issues"
   },
   "keywords": [
-    "actions"
+    "actions",
+    "naukri",
+    "resume",
+    "job",
+    "automation"
   ],
   "exports": {
     ".": "./dist/index.js"
