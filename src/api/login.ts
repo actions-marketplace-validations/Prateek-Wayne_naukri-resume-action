@@ -1,8 +1,8 @@
 import axios from 'axios';
 import type { AxiosResponse } from 'axios';
-import { loginHeaders } from '../utils/headers.ts';
-import { loginUrl } from '../utils/constants.ts';
-import type { LoginCookies } from '../utils/types.ts';
+import { loginHeaders } from '../utils/headers';
+import { loginUrl } from '../utils/constants';
+import type { LoginCookies } from '../utils/types';
 
 const extractCookieObject = (cookies: string[] = []): LoginCookies => {
   let unid = '';

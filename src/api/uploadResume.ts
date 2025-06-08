@@ -2,20 +2,20 @@ import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
 import FormData from 'form-data';
-import { uploadFileHeader } from '../utils/headers.ts';
-import type { LoginCookies } from '../utils/types.ts';
-import { resumeUpdateUrl, resumeUploadUrl } from '../utils/constants.ts';
+import { uploadFileHeader } from '../utils/headers';
+import type { LoginCookies } from '../utils/types';
+import { resumeUpdateUrl, resumeUploadUrl } from '../utils/constants';
 
 /**
  * Uploads resume file to Naukri and updates the profile
  * @param cookieHeader Authentication cookies from login
- * @param filePath Path to the resume file
+ * @param resumePath Path to the resume file
  * @param resumeId ID of the resume to update
  * @returns Promise resolving to boolean indicating success
  */
 export const uploadResume = async (
   cookieHeader: LoginCookies,
-  filePath: string,
+  resumePath: string,
   resumeId: string
 ): Promise<boolean> => {
   try {
@@ -23,7 +23,7 @@ export const uploadResume = async (
     const formKey = 'F51f8e7e54e205';
     const fileKey = 'UyFNbCXtBHdkXQ';
     const uploadCallback = 'true';
-    const fileName = path.basename(filePath);
+    const fileName = path.basename(resumePath);
 
     // Create form data for file upload
     const formData = new FormData();
@@ -31,7 +31,7 @@ export const uploadResume = async (
     formData.append('fileName', fileName);
     formData.append('uploadCallback', uploadCallback);
     formData.append('fileKey', fileKey);
-    formData.append('file', fs.createReadStream(filePath));
+    formData.append('file', fs.createReadStream(resumePath));
 
     const uploadHeaders = uploadFileHeader(cookieHeader);
 
