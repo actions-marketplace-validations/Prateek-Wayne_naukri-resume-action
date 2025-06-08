@@ -31,10 +31,13 @@ jobs:
         with:
           node-version-file: .node-version
           cache: npm
+      - name: Install Yarn
+        id: install-yarn
+        run: npm install -g yarn
 
       - name: Install Dependencies
         id: install
-        run: npm ci
+        run: yarn install
 
       - name: Lint Codebase
         id: super-linter

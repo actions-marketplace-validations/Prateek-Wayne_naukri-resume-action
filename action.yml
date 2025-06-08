@@ -10,7 +10,7 @@ branding:
 # Define your inputs here.
 inputs:
   username:
-    description: 'Naukri.com username or email'
+    description: 'Naukri.com email'
     required: true
   password:
     description: 'Naukri.com password'
@@ -18,10 +18,9 @@ inputs:
   resume_path:
     description: 'Path to the resume file to upload'
     required: true
-  overwrite:
-    description: 'Whether to overwrite existing resume'
-    required: false
-    default: 'true'
+  profile_id:
+    description: 'profileId of the naukri.com account'
+    required: true
 
 # Define your outputs here.
 outputs:
@@ -29,8 +28,6 @@ outputs:
     description: 'Status of the resume upload (success/failure)'
   upload_time:
     description: 'Timestamp of the upload operation'
-  profile_url:
-    description: 'URL to the updated profile on naukri.com'
 
 runs:
   using: node20

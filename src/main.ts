@@ -1,4 +1,7 @@
-import * as core from '@actions/core'
+import * as core from '@actions/core';
+import * as fs from 'fs';
+import { login } from './api/login';
+import { uploadResume } from './api/uploadResume';
 
 /**
  * The main function for the action.
@@ -7,39 +10,92 @@ import * as core from '@actions/core'
  */
 export async function run(): Promise<void> {
   try {
-    // Get inputs defined in action.yml
-    const username = core.getInput('username')
-    const password = core.getInput('password')
-    const resumePath = core.getInput('resume_path')
-    const overwrite = core.getInput('overwrite') === 'true'
+    // Get user inputs
+    const username = core.getInput('username');
+    const password = core.getInput('password');
+    const profileId = core.getInput('profile_id');
+    const resumePathInput = core.getInput('resume_path');
 
-    // Mask sensitive inputs in logs
-    core.setSecret(username)
-    core.setSecret(password)
+    // Mask sensitive inputs
+    core.setSecret(username);
+    core.setSecret(password);
+    core.setSecret(profileId);
 
-    // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-    core.debug(`Starting Naukri resume upload process...`)
-    core.debug(`Resume path: ${resumePath}`)
-    core.debug(`Overwrite existing: ${overwrite}`)
+    // Parse resume paths (could be a single path or multiple paths in YAML array format)
+    let resumePaths: string[] = [];
 
-    // Implement the login and upload functionality here
-    // This would involve browser automation with Puppeteer or similar
+    // If the input contains newlines, it's likely a YAML array
+    if (resumePathInput.includes('\n')) {
+      resumePaths = resumePathInput
+        .split('\n')
+        .map((line) => line.trim())
+        .filter((line) => line && !line.startsWith('#')); // Remove empty lines and comments
+    } else {
+      // Single path
+      resumePaths = [resumePathInput];
+    }
 
-    // Example placeholder for the implementation
-    core.info('Logging into Naukri.com...')
-    // await login(username, password)
+    if (resumePaths.length === 0) {
+      throw new Error('🚫 No valid resume paths provided');
+    }
 
-    core.info('Uploading resume...')
-    // const result = await uploadResume(resumePath, overwrite)
+    // Verify all paths exist
+    const validResumePaths = resumePaths.filter((path) => {
+      const exists = fs.existsSync(path);
+      if (!exists) {
+        core.warning(`⚠️ Resume file not found: ${path}`);
+      }
+      return exists;
+    });
 
-    // Set outputs for other workflow steps to use
-    core.setOutput('upload_status', 'success')
-    core.setOutput('upload_time', new Date().toISOString())
-    core.setOutput('profile_url', 'https://www.naukri.com/mnjuser/profile')
+    if (validResumePaths.length === 0) {
+      throw new Error('🚫 No valid resume files found at the specified paths');
+    }
 
-    core.info('Resume upload completed successfully!')
+    // Select resume based on date for deterministic selection
+    // This provides a consistent way to rotate resumes based on the calendar
+    const today = new Date();
+    const dayOfMonth = today.getDate(); // 1-31
+    const dayOfWeek = today.getDay(); // 0-6 (Sunday is 0)
+    const month = today.getMonth(); // 0-11
+
+    // Combine day of month, day of week, and month for better distribution
+    const selectionFactor =
+      (dayOfMonth + dayOfWeek * 5 + month * 31) % validResumePaths.length;
+
+    const selectedResume = validResumePaths[selectionFactor];
+
+    core.info(`📄 Selected resume for upload: ${selectedResume}`);
+    core.info(
+      `📅 Selection based on date: Day ${dayOfMonth}, Weekday ${dayOfWeek}, Month ${month + 1}`
+    );
+    core.setOutput('selected_resume 📄', selectedResume);
+
+    // Login to Naukri
+    core.info('🔐 Logging in to Naukri.com...');
+    const cookies = await login(username, password);
+
+    if (!cookies) {
+      throw new Error('❌ Login failed');
+    }
+
+    // Upload the resume
+    core.info('⬆️ Uploading resume...');
+    const success = await uploadResume(cookies, selectedResume, profileId);
+
+    // Set outputs
+    core.setOutput('upload_status 🚀', success ? 'success ✅' : 'failure ❌');
+    core.setOutput('upload_time 🕒', new Date().toISOString());
+
+    if (success) {
+      core.info('✅ Resume uploaded successfully!');
+    } else {
+      core.setFailed('❌ Resume upload failed');
+    }
   } catch (error) {
-    // Fail the workflow run if an error occurs
-    if (error instanceof Error) core.setFailed(error.message)
+    if (error instanceof Error) core.setFailed(`❗ ${error.message}`);
   }
 }
+
+// Run the action
+run();
