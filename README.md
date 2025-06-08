@@ -1,7 +1,6 @@
 # Naukri Resume Action 📄
 
 [![GitHub Super-Linter](https://github.com/Prateek-Wayne/naukri-resume-action/actions/workflows/linter.yml/badge.svg)](https://github.com/Prateek-Wayne/naukri-resume-action/actions/workflows/linter.yml)
-[![CI](https://github.com/Prateek-Wayne/naukri-resume-action/actions/workflows/ci.yml/badge.svg)](https://github.com/Prateek-Wayne/naukri-resume-action/actions/workflows/ci.yml)
 
 A GitHub Action to automatically upload your resume to Naukri.com. Keep your
 profile fresh and maintain activity on your account without manual intervention!
