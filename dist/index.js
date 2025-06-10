@@ -47506,7 +47506,11 @@ const uploadResume = async (cookieHeader, resumePath, resumeId) => {
         formData.append('fileName', fileName);
         formData.append('uploadCallback', uploadCallback);
         formData.append('fileKey', fileKey);
-        formData.append('file', require$$1__default.createReadStream(resumePath));
+        const fileBuffer = require$$1__default.readFileSync(resumePath);
+        formData.append('file', fileBuffer, {
+            filename: fileName,
+            contentType: 'application/pdf'
+        });
         const uploadHeaders = uploadFileHeader(cookieHeader);
         console.log('Uploading file...');
         const uploadResponse = await axios.post(resumeUploadUrl, formData, {
@@ -47630,8 +47634,6 @@ async function run() {
             coreExports.setFailed(`❗ ${error.message}`);
     }
 }
-// Run the action
-run();
 
 /**
  * The entrypoint for the action. This file simply imports and runs the action's

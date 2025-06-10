@@ -31,7 +31,12 @@ export const uploadResume = async (
     formData.append('fileName', fileName);
     formData.append('uploadCallback', uploadCallback);
     formData.append('fileKey', fileKey);
-    formData.append('file', fs.createReadStream(resumePath));
+
+    const fileBuffer = fs.readFileSync(resumePath);
+    formData.append('file', fileBuffer, {
+      filename: fileName,
+      contentType: 'application/pdf'
+    });
 
     const uploadHeaders = uploadFileHeader(cookieHeader);
 
