@@ -58,6 +58,14 @@ See a full example:
 | `profile_id`  | Naukri profile ID                       | Yes      |
 | `resume_path` | Path(s) to resume file(s), one per line | Yes      |
 
+## Finding Your Profile ID 🔍
+
+Your Naukri profile ID is essential for this action to work correctly. Here's
+how to find it:
+
+📹 **Video Guide**:
+[How to Find Your Naukri Profile ID](https://youtu.be/your-video-link-here)
+
 ## Security 🔒
 
 **Never hardcode credentials.** Use GitHub Secrets:
