@@ -64,7 +64,10 @@ Your Naukri profile ID is essential for this action to work correctly. Here's
 how to find it:
 
 📹 **Video Guide**:
-[How to Find Your Naukri Profile ID](https://youtu.be/your-video-link-here)
+
+https://github.com/user-attachments/assets/44f2744e-672d-48b6-b8b7-1de1dfb7217c
+
+
 
 ## Security 🔒
 
