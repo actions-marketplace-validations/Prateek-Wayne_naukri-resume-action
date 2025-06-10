@@ -41,9 +41,9 @@ jobs:
           password: ${{ secrets.NAUKRI_PASSWORD }}
           profile_id: ${{ secrets.NAUKRI_PROFILE_ID }}
           resume_path: |-
-            resumes/resume1.pdf
-            resumes/resume2.pdf
-            resumes/resume3.pdf
+            ./resumes/resume1.pdf
+            ./resumes/resume2.pdf
+            ./resumes/resume3.pdf
 ```
 
 See a full example:

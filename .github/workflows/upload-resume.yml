@@ -2,7 +2,7 @@ name: Upload Naukri Resume
 
 on:
   schedule:
-     - cron: '0 0 * * *' # Run every day at midnight
+    - cron: '0 0 * * *' # Run every day at midnight
   # Add this to make it easier to trigger manually
   workflow_dispatch:
 
@@ -20,4 +20,4 @@ jobs:
           password: ${{ secrets.NAUKRI_PASSWORD }}
           profile_id: ${{ secrets.NAUKRI_PROFILE_ID }}
           resume_path: |-
-            resumes/resume1.pdf
+            ./resumes/resume1.pdf
