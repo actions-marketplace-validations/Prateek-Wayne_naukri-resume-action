@@ -1,6 +1,6 @@
 {
-  "name": "naukri-resume-action",
-  "description": "GitHub Action to automate uploading resumes to naukri.com",
+  "name": "naukri-profile-updater",
+  "description": "GitHub Action to keep your Naukri profile active by uploading resumes, updating profile summary, and resume headline",
   "version": "1.0.0",
   "author": "Prateek Wayne",
   "type": "module",
@@ -17,6 +17,9 @@
     "actions",
     "naukri",
     "resume",
+    "profile",
+    "headline",
+    "summary",
     "job",
     "automation"
   ],
@@ -24,7 +27,7 @@
     ".": "./dist/index.js"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   },
   "scripts": {
     "bundle": "npm run format:write && npm run package",
@@ -41,36 +44,36 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.11.1",
-    "axios": "^1.9.0",
-    "form-data": "^4.0.3"
+    "@actions/core": "^3.0.1",
+    "axios": "^1.18.1",
+    "form-data": "^4.0.6"
   },
   "devDependencies": {
-    "@eslint/compat": "^1.2.9",
-    "@github/local-action": "^3.2.1",
-    "@jest/globals": "^29.7.0",
-    "@rollup/plugin-commonjs": "^28.0.1",
+    "@eslint/compat": "^2.1.0",
+    "@github/local-action": "^7.0.1",
+    "@jest/globals": "^30.4.1",
+    "@rollup/plugin-commonjs": "^29.0.3",
     "@rollup/plugin-json": "^6.1.0",
-    "@rollup/plugin-node-resolve": "^16.0.1",
-    "@rollup/plugin-typescript": "^12.1.1",
-    "@types/jest": "^29.5.14",
-    "@types/node": "^20.17.57",
-    "@typescript-eslint/eslint-plugin": "^8.33.0",
-    "@typescript-eslint/parser": "^8.32.1",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-typescript": "^12.3.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^20.19.43",
+    "@typescript-eslint/eslint-plugin": "^8.63.0",
+    "@typescript-eslint/parser": "^8.63.0",
     "eslint": "^9.28.0",
-    "eslint-config-prettier": "^10.1.5",
-    "eslint-import-resolver-typescript": "^4.4.2",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-jest": "^28.12.0",
-    "eslint-plugin-prettier": "^5.4.1",
-    "jest": "^29.7.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-import-resolver-typescript": "^4.4.5",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jest": "^29.15.4",
+    "eslint-plugin-prettier": "^5.5.6",
+    "jest": "^30.4.2",
     "make-coverage-badge": "^1.2.0",
-    "prettier": "^3.5.3",
-    "prettier-eslint": "^16.4.2",
-    "rollup": "^4.41.1",
-    "ts-jest": "^29.3.4",
+    "prettier": "^3.9.5",
+    "prettier-eslint": "^17.1.1",
+    "rollup": "^4.62.2",
+    "ts-jest": "^29.4.11",
     "ts-jest-resolver": "^2.0.1",
-    "typescript": "^5.8.3"
+    "typescript": "^6.0.3"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "*"
